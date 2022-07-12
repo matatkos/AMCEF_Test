@@ -1,8 +1,20 @@
 {
-  "users": [
-
+  "posts":[
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "sem kokot",
+      "body": "jebe mi to na hlavu"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "title": "sem picus",
+      "body": "jebe mi to na kokot"
+    }
   ],
-  "posts": [
+
+  "users": [
 
   ]
 }
