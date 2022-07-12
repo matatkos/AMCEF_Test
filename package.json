@@ -1,0 +1,22 @@
+{
+  "name": "amcef_test",
+  "version": "1.0.0",
+  "description": "Test for AMCEF Job",
+  "main": "index.js",
+  "scripts": {
+    "json:server": "json-server --watch db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matatkos/AMCEF_Test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matatkos/AMCEF_Test/issues"
+  },
+  "homepage": "https://github.com/matatkos/AMCEF_Test#readme",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}
