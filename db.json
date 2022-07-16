@@ -1,34 +1,22 @@
 {
     "posts": [
         {
-            "id": 1,
-            "userId": 1,
-            "title": "updated title",
-            "body": "updated body"
-        },
-        {
             "id": 2,
             "userId": 2,
-            "title": "sem picus",
-            "body": "jebe mi to na kokot"
+            "title": "What I ate",
+            "body": "I ate some chicken with rice"
         },
         {
             "id": 3,
             "userId": 2,
-            "title": "jebeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-            "body": "jebe mi to na kokot"
+            "title": "My brother",
+            "body": "My brother is the coolest in the world!"
         },
         {
             "id": 5,
             "userId": 5,
-            "title": "znova mi to jebe",
-            "body": "jebejebejebejebejebejebejebejebejebejebejebejebejebe"
-        },
-        {
-            "id": 69,
-            "userId": 69,
-            "title": "simi je frajer",
-            "body": "simi je borec"
+            "title": "My job",
+            "body": "I love my job"
         }
     ],
     "users": []
