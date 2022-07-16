@@ -1,0 +1,14 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+    <h1>Posts</h1>
+    <div>
+        {% for post in posts %}
+        <span> Post ID:{{post['id']}} | User ID: {{post['userId']}} | Title: {{post['title']}}</span>
+        <br>
+        <span>Body: {{post['body']}}</span>
+        <br>
+        <br>
+        {% endfor %}
+    </div>
+{% endblock content %}

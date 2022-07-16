@@ -11,14 +11,14 @@ def main_request(base_url, edpoint):
 posts_data = main_request(base_url, posts_endpoint)
 users_data = main_request(base_url, users_endpoint)
 
-def get_post_by_id(user_or_post,id):
-    for i in posts_data:
+def get_post_by_id(id, posts):
+    for i in posts:
         if i['id'] == id:
             return i
 
-def get_post_by_userid(userid):
-    for i in posts_data:
-        if i['userId'] == id:
+def get_post_by_userid(userid, posts):
+    for i in posts:
+        if i['userId'] == userid:
             return i
 
 
