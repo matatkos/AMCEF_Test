@@ -5,15 +5,28 @@ from flask import Flask, request, render_template, jsonify
 from flask_restful import Resource, Api
 from requests import put, get
 from flask.views import MethodView, View
-import rest_api
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 api = Api(app)
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.database'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 base_url = 'http://localhost:3000/'
 
 users_endpoint = 'users'
 posts_endpoint = 'posts'
+
+db=SQLAlchemy(app)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer)
+    title= db.Column(db.String)
+    body= db.Column(db.String)
+
+db.create_all()
+
+
 
 Error_Wrong_ID_Int = "Wrong ID input. ID has to be integer."
 Error_Wrong_Data_Str = "Wrong data input. Data have to be string."
@@ -72,8 +85,8 @@ class Posts(MethodView):
                         any_posts= True
                 if any_posts:
                     return render_template('posts.html', posts=user_posts)
-                return "Couldnt find any posts with this UserID"
-            return "Wrong input of UserID",200
+                return render_template('errors.html', error=Error_Post_Not_Found)
+            return render_template('errors.html', error=Error_Wrong_ID_Int)
         #Showing all the posts
         return render_template('posts.html', posts=posts)
 
@@ -83,7 +96,11 @@ class Posts(MethodView):
         new_post_title = request.json['title']
         new_post_body = request.json['body']
         if new_post_body is None or new_post_id is None or new_post_userId is None or new_post_body is None:
-            return "Some data were not given. Please check again"
+            return render_template('errors.html', error=Error_Data_Missing)
+
+        post= Post(new_post_id, new_post_userId, new_post_title, new_post_body)
+        db.session.add(post)
+        db.commit()
 
         new_post = {'id': new_post_id, 'userId': new_post_userId, 'title': new_post_title, 'body': new_post_body}
 
@@ -99,7 +116,7 @@ class Posts(MethodView):
         new_title = request.json['title']
         new_body = request.json['body']
         if isinstance(new_title, str) == False or isinstance(new_body,str) == False:
-            return "Wrong input of data you want to update. Data has to be string."
+            return render_template('errors.html', error=Error_Wrong_Data_Str)
 
         with open('db.json', 'r') as f:
             feeds = json.load(f)
@@ -117,8 +134,8 @@ class Posts(MethodView):
                         with open('db.json', 'w') as f:
                             json.dump(feeds, f, indent=4)
                         return i
-                return "Post was not found"
-            return "Wrong ID input. ID has to be integer."
+                return render_template('errors.html', error=Error_Post_Not_Found)
+            return render_template('errors.html', error=Error_Wrong_ID_Int)
 
         elif userId is not None:
             if userId.isnumeric():
@@ -133,9 +150,9 @@ class Posts(MethodView):
                         with open('db.json', 'w') as f:
                             json.dump(feeds, f, indent=4)
                         return i
-                return "Post was not found."
-            return "Wrong UserID input. UserID has to be integer."
-        return "No ID or UserID were given."
+                return render_template('errors.html', error=Error_Post_Not_Found)
+            return render_template('errors.html', error=Error_Wrong_ID_Int)
+        return render_template('errors.html', error=Error_ID_Not_Input)
     def delete(self, id, userId):
         if id is not None:
             with open('db.json', 'r') as f:
@@ -147,9 +164,18 @@ class Posts(MethodView):
                     with open('db.json', 'w') as f:
                         json.dump(feeds,f, indent=4)
                     return "Post was succesfulyy deleted"
-            return "Post could not be found"
+            return render_template('errors.html', error=Error_Post_Not_Found)
         elif userId is not None:
-            return
+            with open('db.json', 'r') as f:
+                feeds = json.load(f)
+            posts = feeds['posts']
+            for i in posts:
+                if i['userId'] == userId:
+                    posts.remove(i)
+                    with open('db.json', 'w') as f:
+                        json.dump(feeds, f, indent=4)
+                    return "Post was succesfulyy deleted"
+            return render_template('errors.html', error=Error_Post_Not_Found)
 
 posts = Posts.as_view('posts')
 app.add_url_rule('/posts/', view_func=posts, methods = ['POST'])
