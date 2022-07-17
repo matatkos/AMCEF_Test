@@ -11,6 +11,12 @@
             "userId": 5,
             "title": "My job",
             "body": "I love my job"
+        },
+        {
+            "id": 1,
+            "userId": 1,
+            "title": "My dad",
+            "body": "My dad is very hardworking man"
         }
     ]
 }

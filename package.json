@@ -1,7 +1,7 @@
 {
   "name": "amcef_test",
   "version": "1.0.0",
-  "description": "Test for AMCEF Job",
+  "description": "REST API for Managing Posts",
   "main": "index.js",
   "scripts": {
     "json:server": "json-server --watch db.json"
