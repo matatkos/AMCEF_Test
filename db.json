@@ -1,22 +1,16 @@
 {
-  "posts": [
-    {
-      "id": 2,
-      "userId": 2,
-      "title": "What I ate",
-      "body": "I ate some chicken with rice"
-    },
-    {
-      "id": 3,
-      "userId": 2,
-      "title": "My brother",
-      "body": "My brother is the coolest in the world!"
-    },
-    {
-      "id": 5,
-      "userId": 5,
-      "title": "My job",
-      "body": "I love my job"
-    }
-  ]
+    "posts": [
+        {
+            "id": 2,
+            "userId": 2,
+            "title": "What I ate",
+            "body": "I ate some chicken with rice"
+        },
+        {
+            "id": 5,
+            "userId": 5,
+            "title": "My job",
+            "body": "I love my job"
+        }
+    ]
 }
