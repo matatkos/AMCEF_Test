@@ -1,11 +1,11 @@
 import requests
 import json
-from flask import Flask, request, render_template, jsonify
-from flask_restful import Resource, Api
-from flask.views import MethodView, View
+from flask import Flask, request, render_template
+from flask_restful import  Api
+from flask.views import MethodView
 from peewee import SqliteDatabase, Model, TextField, IntegerField
 import os
-from os.path import exists
+
 if os.path.exists('posts.db'):
     os.remove('posts.db')
 
@@ -32,15 +32,7 @@ class Post(BaseTable):
 db.connect()
 db.create_tables([Post])
 
-'''post1 = Posts.create(
-    userId= 1,
-    title = "Skusobny text na peewee",
-    body="Testujem peewee"
-)
-post1.save()
-for posts in Posts.select():
-    print("id:",posts.id)
-'''
+
 Error_Wrong_ID_Int = "Wrong ID input. ID has to be integer."
 Error_Wrong_Data_Str = "Wrong data input. Data have to be string."
 Error_Data_Missing = "Some data you want to input are missing. Please check again."
@@ -62,7 +54,6 @@ for post in posts:
         title = post['title'],
         body = post['body']
     )
-    print(new_post.id, new_post.userId, new_post.title, new_post.body)
     new_post.save()
 
 
