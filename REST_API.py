@@ -169,6 +169,7 @@ class Posts(MethodView):
     #Used to edit already existing post
     def put(self, id : str):
         #Requesting data
+        print(id)
         new_title = request.json['title']
         new_body = request.json['body']
         #Checking if all data were given
@@ -192,17 +193,17 @@ class Posts(MethodView):
                         i.title = new_title
                         i.body = new_body
                         #Posts in JSON database
-                        posts = feeds['posts']
+                        posts=feeds['posts']
                         for j in posts:
                             if j['id'] == i.id:
                                 #Editing post JSON database
-                                i['title'] = i.title
-                                i['body'] = i.body
+                                j['title'] = i.title
+                                j['body'] = i.body
                                 #Writing edited data back into JSON database
                                 with open('db.json', 'w') as f:
                                     json.dump(feeds, f, indent=4)
                                 #Returning edited post
-                                return i
+                                return j
                 #Eror if no post with given IDD was found
                 return render_template('errors.html', error=Error_Post_Not_Found)
             #Error if give ID is not integer
@@ -248,8 +249,8 @@ posts = Posts.as_view('posts')
 #Creating endpoints for REST API
 app.add_url_rule('/posts/', view_func=posts, methods = ['POST'])
 app.add_url_rule('/posts/', defaults={'userId' : None, 'id' : None},view_func=posts)
-app.add_url_rule('/posts/id=<id>', defaults={'userId' : None},view_func=posts, methods = ['GET', 'PUT','DELETE'])
-app.add_url_rule('/posts/userId=<userId>',defaults={'id' : None},  view_func=posts, methods = ['GET', 'PUT', 'DELETE'])
+app.add_url_rule('/posts/id=<id>',view_func=posts, methods = ['GET', 'PUT','DELETE'])
+app.add_url_rule('/posts/userId=<userId>',defaults={'id' : None},  view_func=posts, methods = ['GET'])
 
 if __name__ == '__main__':
     app.run(debug=False)
